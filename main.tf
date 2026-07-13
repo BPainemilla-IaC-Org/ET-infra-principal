@@ -17,16 +17,16 @@ module "networking" {
 }
 
 module "compute" {
-  source                 = "git::https://github.com/BPainemilla-IaC-Org/terraform-aws-ec2-module.git?ref=v1.0.0"
-  ssh_key_name           = var.ssh_key_name
-  ssh_key_filename       = var.ssh_key_filename
-  tls_key_bits           = var.tls_key_bits
-  ec2_instance_name      = var.ec2_instance_name
-  ec2_instance_type      = var.ec2_instance_type
-  ami_owner              = var.ami_owner
-  ami_name_filter        = var.ami_name_filter
-  ssh_connect_user       = var.ssh_connect_user
-  subnet_id              = module.networking.subnet_public_a_id
+  source            = "git::https://github.com/BPainemilla-IaC-Org/terraform-aws-ec2-module.git?ref=v1.0.0"
+  ssh_key_name      = var.ssh_key_name
+  ssh_key_filename  = var.ssh_key_filename
+  tls_key_bits      = var.tls_key_bits
+  ec2_instance_name = var.ec2_instance_name
+  ec2_instance_type = var.ec2_instance_type
+  ami_owner         = var.ami_owner
+  ami_name_filter   = var.ami_name_filter
+  ssh_connect_user  = var.ssh_connect_user
+  subnet_id         = module.networking.subnet_public_a_id
   # vpc_security_group_ids = [module.networking.security_group_id]
 }
 
