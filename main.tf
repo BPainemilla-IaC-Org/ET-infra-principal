@@ -1,5 +1,5 @@
 module "networking" {
-  source                = "git::https://github.com/bapp86/VPC_EVA3_BPainemilla.git"
+  source                = "git::https://github.com/BPainemilla-IaC-Org/terraform-aws-vpc-module.git?ref=v1.0.0"
   vpc_name              = var.vpc_name
   vpc_cidr_block        = var.vpc_cidr_block
   subnet_a_name         = var.subnet_a_name
@@ -17,7 +17,7 @@ module "networking" {
 }
 
 module "compute" {
-  source                = "git::https://github.com/bapp86/EC2_EVA3_BPainemilla.git"
+  source                = "git::https://github.com/BPainemilla-IaC-Org/terraform-aws-ec2-module.git?ref=v1.0.0"
   ssh_key_name          = var.ssh_key_name
   ssh_key_filename      = var.ssh_key_filename
   tls_key_bits          = var.tls_key_bits
@@ -31,7 +31,7 @@ module "compute" {
 }
 
 module "storage" {
-  source                  = "git::https://github.com/bapp86/S3_EVA3_BPainemilla.git"
+  source                  = "git::https://github.com/BPainemilla-IaC-Org/terraform-aws-s3-module.git?ref=v1.0.0"
   s3_bucket_name          = var.s3_bucket_name
   s3_bucket_is_public     = var.s3_bucket_is_public
   s3_force_destroy        = var.s3_force_destroy
