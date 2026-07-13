@@ -1,0 +1,51 @@
+name: Terraform DevSecOps Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Trabajo 1: Análisis Estático de Seguridad
+  security_scan:
+    name: TFSec Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Ejecutar TFSec
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          soft_fail: false # Bloquea el PR si detecta vulnerabilidades
+
+  # Trabajo 2: Validación y Planificación
+  terraform_plan:
+    name: Terraform Plan
+    needs: security_scan # Solo se ejecuta si TFSec aprueba el código
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_DEFAULT_REGION: "us-east-1"
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.5.0"
+
+      - name: Inicializar Terraform
+        run: terraform init
+
+      - name: Formateo y Validación
+        run: |
+          terraform fmt -check
+          terraform validate -no-color
+
+      - name: Planificar Infraestructura
+        run: terraform plan -no-color
