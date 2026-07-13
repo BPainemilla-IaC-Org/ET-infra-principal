@@ -27,7 +27,7 @@ module "compute" {
   ami_name_filter        = var.ami_name_filter
   ssh_connect_user       = var.ssh_connect_user
   subnet_id              = module.networking.subnet_public_a_id
-  vpc_security_group_ids = [module.networking.security_group_id]
+  # vpc_security_group_ids = [module.networking.security_group_id]
 }
 
 module "storage" {
